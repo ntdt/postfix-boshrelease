@@ -1,1 +1,6 @@
---- {}
+apt/postfix/postfix_2.11.0-1ubuntu1_amd64.deb:
+  size: 1084168
+  sha: a9ca8ae4d39c20d06d5ca04119994fea867fd6be
+apt/postfix/ssl-cert_1.0.33_all.deb:
+  size: 16650
+  sha: e2b01268291d438b7d457b5d3595c5b14e5400d1
