@@ -1,0 +1,37 @@
+---
+name: postfix
+packages:
+- postfix
+templates:
+  bin/ctl: bin/ctl
+  bin/monit_debugger: bin/monit_debugger
+  data/properties.sh.erb: data/properties.sh
+  helpers/ctl_setup.sh: helpers/ctl_setup.sh
+  helpers/ctl_utils.sh: helpers/ctl_utils.sh
+  config/main.cf.erb: config/main.cf
+  config/master.cf: config/master.cf
+  config/server.key.erb: config/certs/server.key
+  config/server.crt.erb: config/certs/server.crt
+properties:
+  postfix:
+    relayhost:
+      description: "FQDN of relayhost and port"
+      default: ""
+    relayhost_user:
+      description: "User to connect to relayhost"
+      default: "apikey"
+    relayhost_password:
+      description: "Password of user relayhost"
+      default: ""
+    mynetworks:
+      description: "CIDR of networks this host authorize the mail relay"
+      default: ""
+    myhostname:
+      description: "SMTP hostname"
+      default: ""
+    tls_cert:
+      description: "Certificat TLS"
+      default: ""
+    tls_key:
+      description: "TLS Key"
+      default: ""

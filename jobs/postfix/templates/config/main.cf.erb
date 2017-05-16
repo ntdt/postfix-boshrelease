@@ -1,0 +1,43 @@
+queue_directory = /var/vcap/packages/postfix/var/spool/postfix
+command_directory = /var/vcap/packages/postfix/usr/sbin
+daemon_directory = /var/vcap/packages/postfix/usr/libexec/postfix
+data_directory = /var/vcap/packages/postfix/var/lib/postfix
+mail_owner = vcap
+setgid_group = admin
+unknown_local_recipient_reject_code = 550
+sendmail_path = /var/vcap/packages/usr/sbin/sendmail
+newaliases_path = /var/vcap/packages/usr/bin/newaliases
+mailq_path = /var/vcap/packages/usr/bin/mailq
+html_directory = no
+manpage_directory = /var/vcap/packages/usr/local/man
+sample_directory = /var/vcap/packages/etc/postfix
+readme_directory = no
+inet_protocols = all
+
+# Sendgrid config
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = static:<%=p('postfix.relayhost_user')%>:<%=p('postfix.relayhost_password')%>
+smtp_sasl_security_options = noanonymous 
+smtp_tls_security_level = encrypt
+header_size_limit = 4096000
+relayhost = <%=p('postfix.relayhost')%>
+
+smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
+
+myhostname = <%= p('postfix.myhostname') %>
+alias_maps = hash:/etc/aliases
+alias_database = hash:/etc/aliases
+myorigin = $myhostname
+mydestination = $myhostname, localhost
+mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128, <% if_p('postfix.mynetworks') do |postfix_mynetworks| %> <%=postfix_mynetworks.join(',') %> <% end %>
+mailbox_size_limit = 0
+recipient_delimiter = +
+inet_interfaces = all
+
+# TLS parameters
+smtpd_tls_cert_file=/var/vcap/jobs/postfix/config/certs/server.crt
+smtpd_tls_key_file=/var/vcap/jobs/postfix/config/certs/server.key
+smtpd_use_tls=yes
+smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
+smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
+smtpd_tls_security_level=encrypt
