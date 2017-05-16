@@ -30,8 +30,8 @@ networks:
 - name: postfix1
   type: manual
   subnets:
-  - range: 10.244.105.0/24
+  - range: 10.244.246.0/24
     name: postfix1
-    gateway: 10.244.105.1
+    gateway: 10.244.246.1
     static:
-      - 10.244.105.2 - 10.244.105.60
+      - 10.244.246.2 - 10.244.246.60
