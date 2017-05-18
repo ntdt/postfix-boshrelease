@@ -5,14 +5,14 @@ data_directory = /var/vcap/packages/postfix/var/lib/postfix
 mail_owner = vcap
 setgid_group = admin
 unknown_local_recipient_reject_code = 550
-sendmail_path = /var/vcap/packages/usr/sbin/sendmail
-newaliases_path = /var/vcap/packages/usr/bin/newaliases
-mailq_path = /var/vcap/packages/usr/bin/mailq
+sendmail_path = /var/vcap/packages/postfix/usr/sbin/sendmail
+newaliases_path = /var/vcap/packages/postfix/usr/bin/newaliases
+mailq_path = /var/vcap/packages/postfix/usr/bin/mailq
 html_directory = no
-manpage_directory = /var/vcap/packages/usr/local/man
-sample_directory = /var/vcap/packages/etc/postfix
+manpage_directory = /var/vcap/packages/postfix/usr/local/man
+sample_directory = /var/vcap/packages/postfix/etc/postfix
 readme_directory = no
-inet_protocols = all
+inet_protocols = ipv4
 
 # Sendgrid config
 smtp_sasl_auth_enable = yes
@@ -25,8 +25,8 @@ relayhost = <%=p('postfix.relayhost')%>
 smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
 
 myhostname = <%= p('postfix.myhostname') %>
-alias_maps = hash:/etc/aliases
-alias_database = hash:/etc/aliases
+alias_maps = hash:/var/vcap/jobs/postfix/config/aliases
+alias_database = hash:/var/vcap/jobs/postfix/config/aliases
 myorigin = $myhostname
 mydestination = $myhostname, localhost
 mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128, <% if_p('postfix.mynetworks') do |postfix_mynetworks| %> <%=postfix_mynetworks.join(',') %> <% end %>

@@ -1,7 +1,10 @@
 ---
 name: postfix
 packages:
+- berkeleydb
+- sasl2
 - postfix
+
 templates:
   bin/ctl: bin/ctl
   bin/monit_debugger: bin/monit_debugger
@@ -12,6 +15,7 @@ templates:
   config/master.cf: config/master.cf
   config/server.key.erb: config/certs/server.key
   config/server.crt.erb: config/certs/server.crt
+  config/aliases: config/aliases
 properties:
   postfix:
     relayhost:

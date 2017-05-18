@@ -40,6 +40,7 @@ for package_bin_dir in $(ls -d /var/vcap/packages/*/lib)
 do
   export LD_LIBRARY_PATH=${package_bin_dir}:$LD_LIBRARY_PATH
 done
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/var/vcap/packages/sasl2/lib/sasl2
 
 # Setup log, run and tmp folders
 
@@ -77,6 +78,9 @@ chgrp -R admin ${PACKAGE_DIR}/var/spool/postfix/public
 chgrp -R admin ${PACKAGE_DIR}/var/spool/postfix/maildrop
 chmod g+s ${PACKAGE_DIR}/usr/sbin/postqueue
 chmod g+s ${PACKAGE_DIR}/usr/sbin/postdrop
+
+# launch newaliases
+MAIL_CONFIG=${PACKAGE_DIR}/etc/postfix ${PACKAGE_DIR}/usr/bin/newaliases
 
 #PIDFILE=$RUN_DIR/$output_label.pid
 PIDFILE=/var/vcap/packages/postfix/var/spool/postfix/pid/master.pid

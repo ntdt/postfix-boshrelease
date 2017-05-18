@@ -1,0 +1,26 @@
+set -e # exit immediately if a simple command exits with a non-zero status
+set -u # report the usage of uninitialized variables
+
+# Detect # of CPUs so make jobs can be parallelized
+CPUS=$(grep -c ^processor /proc/cpuinfo)
+ # Available variables
+# $BOSH_COMPILE_TARGET - where this package & spec'd source files are available
+# $BOSH_INSTALL_TARGET - where you copy/install files to be included in package
+export HOME=/var/vcap
+export BDB_PATH=/var/vcap/packages/berkeleydb
+export SASL_PATH=/var/vcap/packages/sasl2
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-''} # default to empty
+for package_bin_dir in $(ls -d /var/vcap/packages/*/lib)
+do
+  export LD_LIBRARY_PATH=${package_bin_dir}:$LD_LIBRARY_PATH
+done
+
+tar xfv postfix/postfix-2.11.9.tar.gz
+cd postfix-2.11.9
+make makefiles CCARGS="-DUSE_SASL_AUTH -DUSE_CYRUS_SASL -I${SASL_PATH}/include/sasl \
+  -DHAS_DB -I${BDB_PATH}/include -DUSE_TLS" \
+  AUXLIBS="-L${BDB_PATH}/lib -ldb -lssl -lcrypto -L${SASL_PATH}/lib -lsasl2"
+make -j${CPUS} && make upgrade \
+  install_root=${BOSH_INSTALL_TARGET} \
+  mail_owner=vcap \
+  setgid_group=admin

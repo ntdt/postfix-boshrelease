@@ -1,0 +1,7 @@
+---
+name: postfix
+dependencies:
+- berkeleydb
+- sasl2
+files:
+- postfix/postfix-2.11.9.tar.gz
