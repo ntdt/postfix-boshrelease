@@ -95,7 +95,5 @@ chmod 640 ${CERT_DIR}/*.crt
 chmod 400 ${CERT_DIR}/*.key
 
 # config main.cf
-smtpd_use_tls=yes
-smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
-smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
 ln -fs ${JOB_DIR}/config/main.cf /etc/postfix/
+ln -fs ${JOB_DIR}/config/master.cf /etc/postfix/

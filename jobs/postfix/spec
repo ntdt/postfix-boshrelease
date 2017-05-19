@@ -31,6 +31,9 @@ properties:
     myhostname:
       description: "SMTP hostname"
       default: ""
+    use_tls:
+      description: "SMTPD use TLS true/false"
+      default: false
     tls_cert:
       description: "Certificat TLS"
       default: ""
