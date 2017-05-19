@@ -10,14 +10,16 @@ export LANG=en_US.UTF-8
 case $1 in
 
   start)
-    pid_guard $PIDFILE $JOB_NAME
+    /etc/init.d/postfix start  
+    #pid_guard $PIDFILE $JOB_NAME
 
-    exec  ${PACKAGE_DIR}/usr/sbin/postfix -c ${PACKAGE_DIR}/etc/postfix/ start
-         >>$LOG_DIR/$JOB_NAME.log 2>&1
+    #exec  ${PACKAGE_DIR}/usr/sbin/postfix -c ${PACKAGE_DIR}/etc/postfix/ start
+    #     >>$LOG_DIR/$JOB_NAME.log 2>&1
     ;;
 
   stop)
-    kill_and_wait $PIDFILE
+    /etc/init.d/postfix stop
+    #kill_and_wait $PIDFILE
 
     ;;
   *)

@@ -1,5 +1,0 @@
----
-name: sasl2
-dependencies: [ berkeleydb ]
-files:
-- sasl2/cyrus-sasl-2.1.25.tar.gz

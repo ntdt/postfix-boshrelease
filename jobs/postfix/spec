@@ -1,8 +1,6 @@
 ---
 name: postfix
 packages:
-- berkeleydb
-- sasl2
 - postfix
 
 templates:

@@ -29,6 +29,36 @@ source $JOB_DIR/helpers/ctl_utils.sh
 redirect_output ${output_label}
 
 export HOME=${HOME:-/home/vcap}
+function error() {
+  echo " !     $*" >&2
+  exit 1
+}
+
+function topic() {
+  echo "-----> $*"
+}
+
+APT_OPTIONS="-o debug::nolocking=true"
+topic "Updating apt caches"
+apt-get $APT_OPTIONS update
+
+export DEBIAN_FRONTEND="noninteractive"
+debconf-set-selections <<< "postfix postfix/root_address string root@localhost"
+debconf-set-selections <<< "postfix postfix/destinations string localhost, localhost.localdomain"
+debconf-set-selections <<< "postfix postfix/relayhost string example.com"
+debconf-set-selections <<< "postfix postfix/recipient_delim string +"
+debconf-set-selections <<< "postfix postfix/mailname string mysmtpserver"
+debconf-set-selections <<< "postfix postfix/protocols string all"
+debconf-set-selections <<< "postfix postfix/main_mailer_type select Internet with smarthost"
+debconf-set-selections <<< "postfix postfix/chattr boolean false"
+debconf-set-selections <<< "postfix postfix/mynetworks string 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128"
+debconf-set-selections <<< "postfix postfix/mailbox_limit string 0"
+PACKAGES="postfix libsasl2-modules"
+#for PACKAGE in $PACKAGES; do
+#  topic "Fetching .debs for $PACKAGE"
+#  apt-get $APT_OPTIONS -y install $PACKAGE
+#done
+apt-get $APT_OPTIONS -y install $PACKAGES
 # Add all packages' /bin & /sbin into $PATH
 for package_bin_dir in $(ls -d /var/vcap/packages/*/*bin)
 do
@@ -40,7 +70,6 @@ for package_bin_dir in $(ls -d /var/vcap/packages/*/lib)
 do
   export LD_LIBRARY_PATH=${package_bin_dir}:$LD_LIBRARY_PATH
 done
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/var/vcap/packages/sasl2/lib/sasl2
 
 # Setup log, run and tmp folders
 
@@ -66,22 +95,7 @@ chmod 640 ${CERT_DIR}/*.crt
 chmod 400 ${CERT_DIR}/*.key
 
 # config main.cf
-ln -fs ${JOB_DIR}/config/main.cf ${PACKAGE_DIR}/etc/postfix/
-ln -fs ${JOB_DIR}/config/master.cf ${PACKAGE_DIR}/etc/postfix/
-
-# fix permissions on spool
-chown -R vcap ${PACKAGE_DIR}/var/spool/postfix
-chown -R vcap ${PACKAGE_DIR}/var/lib/postfix
-chgrp admin ${PACKAGE_DIR}/usr/sbin/postqueue
-chgrp admin ${PACKAGE_DIR}/usr/sbin/postdrop
-chgrp -R admin ${PACKAGE_DIR}/var/spool/postfix/public
-chgrp -R admin ${PACKAGE_DIR}/var/spool/postfix/maildrop
-chmod g+s ${PACKAGE_DIR}/usr/sbin/postqueue
-chmod g+s ${PACKAGE_DIR}/usr/sbin/postdrop
-
-# launch newaliases
-MAIL_CONFIG=${PACKAGE_DIR}/etc/postfix ${PACKAGE_DIR}/usr/bin/newaliases
-
-#PIDFILE=$RUN_DIR/$output_label.pid
-PIDFILE=/var/vcap/packages/postfix/var/spool/postfix/pid/master.pid
-echo '$PATH' $PATH
+smtpd_use_tls=yes
+smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
+smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
+ln -fs ${JOB_DIR}/config/main.cf /etc/postfix/

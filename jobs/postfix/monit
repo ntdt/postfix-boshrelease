@@ -1,5 +1,4 @@
 check process postfix
-  with pidfile /var/vcap/packages/postfix/var/spool/postfix/pid/master.pid
+  with pidfile  /var/spool/postfix/pid/master.pid
   start program "/var/vcap/jobs/postfix/bin/monit_debugger postfix_ctl '/var/vcap/jobs/postfix/bin/ctl start'"
   stop program "/var/vcap/jobs/postfix/bin/monit_debugger postfix_ctl '/var/vcap/jobs/postfix/bin/ctl stop'"
-  group vcap

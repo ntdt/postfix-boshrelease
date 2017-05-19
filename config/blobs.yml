@@ -1,13 +1,5 @@
 ---
-berkeleydb/db-5.3.28.tar.gz:
-  object_id: 614866f3-1974-431f-bd27-dee0afe1c43b
-  sha: fa3f8a41ad5101f43d08bc0efb6241c9b6fc1ae9
-  size: 35090431
-postfix/postfix-2.11.9.tar.gz:
-  object_id: a5d2b2d2-3bbd-4bdb-9299-37a4719b3178
-  sha: 9113f3a25a22fcbcdec1cfe66ba5c0570b76b90d
-  size: 4033202
-sasl2/cyrus-sasl-2.1.25.tar.gz:
-  object_id: fa27fd95-237a-4013-8077-530239fea8ad
-  sha: 1ac1f1408643aa6687af5f2f763d9ff2a64304c8
-  size: 1489145
+postfix/packages:
+  object_id: 04201655-bd83-423b-85ea-926bccb5d864
+  sha: 5820edc1848dbd905d99664f84329eeb5bb7ac52
+  size: 25
