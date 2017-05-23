@@ -13,7 +13,7 @@ templates:
   config/master.cf: config/master.cf
   config/server.key.erb: config/certs/server.key
   config/server.crt.erb: config/certs/server.crt
-  config/aliases: config/aliases
+  config/aliases.erb: config/aliases
 properties:
   postfix:
     relayhost:
@@ -24,6 +24,9 @@ properties:
       default: "apikey"
     relayhost_password:
       description: "Password of user relayhost"
+      default: ""
+    root_recipient:
+      description: "Email of root recipient"
       default: ""
     mynetworks:
       description: "CIDR of networks this host authorize the mail relay"

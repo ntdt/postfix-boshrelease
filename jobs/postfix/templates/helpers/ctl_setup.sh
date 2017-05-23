@@ -97,3 +97,5 @@ chmod 400 ${CERT_DIR}/*.key
 # config main.cf
 ln -fs ${JOB_DIR}/config/main.cf /etc/postfix/
 ln -fs ${JOB_DIR}/config/master.cf /etc/postfix/
+cp -f ${JOB_DIR}/config/aliases /etc/aliases
+newaliases
