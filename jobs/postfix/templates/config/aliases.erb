@@ -1,2 +1,4 @@
 postmaster: root
-root: <%= p('postfix.root_recipient') %>
+<% if_p('postfix.root_recipient') do |recipient|%>
+root: <%= p('recipient') %>
+<% end %>
