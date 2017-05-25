@@ -1,0 +1,20 @@
+---
+packages:
+- name: postfix
+  version: 4850d883d5aae5269944294c5d2a013fa4e79617
+  fingerprint: 4850d883d5aae5269944294c5d2a013fa4e79617
+  sha1: c825d8ec92fa0d921d62008eae57770d4a3ce30a
+  dependencies: []
+jobs:
+- name: postfix
+  version: 678f3f61c7b515ca2e2b32c28867f7e97227363d
+  fingerprint: 678f3f61c7b515ca2e2b32c28867f7e97227363d
+  sha1: 3f8168d71e0d9d096636596df4e14348731f3bbe
+license:
+  version: e6c4ccc65c76e75e2338d1edabdcf264d37ee663
+  fingerprint: e6c4ccc65c76e75e2338d1edabdcf264d37ee663
+  sha1: 64008b42e39aaadc531e8c9747dc9648bb920d23
+commit_hash: '95828931'
+uncommitted_changes: false
+name: postfix
+version: '1'
