@@ -7,10 +7,11 @@ templates:
   bin/ctl: bin/ctl
   bin/monit_debugger: bin/monit_debugger
   data/properties.sh.erb: data/properties.sh
-  helpers/ctl_setup.sh: helpers/ctl_setup.sh
+  helpers/ctl_setup.sh.erb: helpers/ctl_setup.sh
   helpers/ctl_utils.sh: helpers/ctl_utils.sh
   config/main.cf.erb: config/main.cf
   config/master.cf: config/master.cf
+  config/smtpd.conf: config/sasl/smtpd.conf
   config/server.key.erb: config/certs/server.key
   config/server.crt.erb: config/certs/server.crt
   config/aliases.erb: config/aliases
@@ -43,3 +44,8 @@ properties:
     tls_key:
       description: "TLS Key"
       default: ""
+    sasl_users:
+      description: "list of users and passwords used for SASL auth"
+      default:
+        user: password
+        user1: password1

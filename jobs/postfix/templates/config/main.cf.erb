@@ -33,7 +33,11 @@ smtp_sasl_password_maps = static:<%=p('postfix.relayhost_user')%>:<%=p('postfix.
 smtp_tls_security_level = encrypt
 header_size_limit= 4096000
 <% end %>
+<% if_p('postfix.sasl_users') do %>
+# SASL stuff
+smtpd_sasl_auth_enable=yes
+<% end %>
 # TLS parameters
-smtpd_tls_security_level=may
+smtpd_tls_security_level=encrypt
 #smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
 #smtpd_relay_restrictions = permit_mynetworks defer_unauth_destination
