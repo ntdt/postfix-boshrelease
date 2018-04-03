@@ -106,3 +106,5 @@ newaliases
 echo <%= p('postfix.sasl_users')[user] %> | saslpasswd2 -c -u `postconf -h mydomain` <%= user %>
 <% end %>
 <% end %>
+cp /etc/sasldb2 /var/spool/postfix/etc/
+chgrp postfix /var/spool/postfix/etc/sasldb2
