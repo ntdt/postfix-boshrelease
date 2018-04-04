@@ -11,12 +11,15 @@ cd postfix-boshrelease
 bosh upload release releases/postfix/postfix-1.yml
 ```
 
-For [bosh-lite](https://github.com/cloudfoundry/bosh-lite), you can quickly create a deployment manifest & deploy a cluster. Note that this requires that you have installed [spruce](https://github.com/geofffranks/spruce).
+For [bosh-lite](https://github.com/cloudfoundry/bosh-lite), you can edit `templates/bosh-lite-example.yml` and change all the `XXX`es to suit your situation and then deploy.
 
 ```
-templates/make_manifest warden
-bosh -n deploy
+mkdir tmp
+cp templates/bosh-lite-example.yml tmp/manifest.yml
+vi tmp/manifest.yml
+bosh deploy -d postfix-warden tmp/manifest.yml
 ```
+If you do not want to enable SASL, then delete the `sasl_users` parameter.  If you do not want to enable DKIM, then delete the `dkim_privatekey` parameter.  If you do want to use DKIM, then you will need to generate that key and make sure that the public part of it is in your DNS.  You can learn more about this here:  https://wiki.debian.org/opendkim
 
 For AWS EC2, create a single VM:
 

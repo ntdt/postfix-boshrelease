@@ -1,1 +1,1 @@
-<%= p('postfix.dkim_privatekey') %>
+<% if_p('postfix.dkim_privatekey') do %><%= p('postfix.dkim_privatekey') %><% end %>
