@@ -38,6 +38,7 @@ header_size_limit= 4096000
 smtpd_sasl_auth_enable=yes
 broken_sasl_auth_clients=yes
 <% end %>
+
 # TLS parameters
 <% if p('postfix.use_tls') %>
 smtpd_tls_security_level=encrypt
@@ -46,3 +47,10 @@ smtpd_tls_security_level=may
 <% end %>
 #smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
 #smtpd_relay_restrictions = permit_mynetworks defer_unauth_destination
+
+<% if p('postfix.dkim_privatekey') %>
+milter_protocol=2
+milter_default_action=accept
+smtpd_milters=inet:localhost:12301
+non_smtpd_milters=inet:localhost:12301
+<% end %>
