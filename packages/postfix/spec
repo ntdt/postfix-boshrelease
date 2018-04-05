@@ -1,5 +1,0 @@
----
-name: postfix
-dependencies:
-files:
-  - postfix/packages
