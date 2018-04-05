@@ -1,7 +1,5 @@
 ---
 name: postfix
-packages:
-- postfix
 
 templates:
   bin/ctl: bin/ctl
