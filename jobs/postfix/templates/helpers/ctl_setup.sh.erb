@@ -53,12 +53,10 @@ debconf-set-selections <<< "postfix postfix/main_mailer_type select Internet wit
 debconf-set-selections <<< "postfix postfix/chattr boolean false"
 debconf-set-selections <<< "postfix postfix/mynetworks string 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128"
 debconf-set-selections <<< "postfix postfix/mailbox_limit string 0"
-PACKAGES="postfix libsasl2-modules"
-#for PACKAGE in $PACKAGES; do
-#  topic "Fetching .debs for $PACKAGE"
-#  apt-get $APT_OPTIONS -y install $PACKAGE
-#done
+
+PACKAGES="postfix libsasl2-modules sasl2-bin opendkim opendkim-tools"
 apt-get $APT_OPTIONS -y install $PACKAGES
+
 # Add all packages' /bin & /sbin into $PATH
 for package_bin_dir in $(ls -d /var/vcap/packages/*/*bin)
 do
@@ -99,3 +97,14 @@ ln -fs ${JOB_DIR}/config/main.cf /etc/postfix/
 ln -fs ${JOB_DIR}/config/master.cf /etc/postfix/
 cp -f ${JOB_DIR}/config/aliases /etc/aliases
 newaliases
+
+<% if_p('postfix.sasl_users') do %>
+# set up sasldb
+<% p('postfix.sasl_users').keys.each do |user| %>
+echo <%= p('postfix.sasl_users')[user] %> | saslpasswd2 -c -u `postconf -h mydomain` <%= user %>
+<% end %>
+<% end %>
+cp /etc/sasldb2 /var/spool/postfix/etc/
+chgrp postfix /var/spool/postfix/etc/sasldb2
+mkdir -p /var/spool/postfix/var/tmp
+chmod 1777 /var/spool/postfix/var/tmp

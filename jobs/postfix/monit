@@ -1,3 +1,10 @@
+<% if_p('postfix.dkim_privatekey') do %>
+check process opendkim
+  with pidfile /var/run/opendkim/bosh_opendkim.pid
+  start program "/var/vcap/jobs/postfix/bin/monit_debugger opendkim_ctl '/var/vcap/jobs/postfix/bin/ctl_opendkim start'"
+  stop program "/var/vcap/jobs/postfix/bin/monit_debugger opendkim_ctl '/var/vcap/jobs/postfix/bin/ctl_opendkim stop'"
+<% end %>
+
 check process postfix
   with pidfile  /var/spool/postfix/pid/master.pid
   start program "/var/vcap/jobs/postfix/bin/monit_debugger postfix_ctl '/var/vcap/jobs/postfix/bin/ctl start'"

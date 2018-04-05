@@ -5,15 +5,23 @@ packages:
 
 templates:
   bin/ctl: bin/ctl
+  bin/ctl_opendkim: bin/ctl_opendkim
   bin/monit_debugger: bin/monit_debugger
   data/properties.sh.erb: data/properties.sh
-  helpers/ctl_setup.sh: helpers/ctl_setup.sh
+  helpers/ctl_setup.sh.erb: helpers/ctl_setup.sh
   helpers/ctl_utils.sh: helpers/ctl_utils.sh
   config/main.cf.erb: config/main.cf
   config/master.cf: config/master.cf
+  config/smtpd.conf: config/sasl/smtpd.conf
   config/server.key.erb: config/certs/server.key
   config/server.crt.erb: config/certs/server.crt
   config/aliases.erb: config/aliases
+  opendkim/etc/opendkim.conf: opendkim/etc/opendkim.conf
+  opendkim/etc/opendkim/TrustedHosts.erb: opendkim/etc/opendkim/TrustedHosts
+  opendkim/etc/opendkim/KeyTable.erb: opendkim/etc/opendkim/KeyTable
+  opendkim/etc/opendkim/SigningTable.erb: opendkim/etc/opendkim/SigningTable
+  opendkim/etc/opendkim/domainkeys/cloudgov.private.erb: opendkim/etc/opendkim/domainkeys/cloudgov.private
+
 properties:
   postfix:
     relayhost:
@@ -42,4 +50,15 @@ properties:
       default: ""
     tls_key:
       description: "TLS Key"
+      default: ""
+    sasl_users:
+      description: "list of users and passwords used for SASL auth"
+      default:
+        user: password
+        user1: password1
+    dkim_privatekey:
+      description: "signing key for opendkim"
+      default: ""
+    dkim_maildomain:
+      description: "mail domain to sign for for opendkim"
       default: ""

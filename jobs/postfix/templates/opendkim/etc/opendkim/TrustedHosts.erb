@@ -1,0 +1,6 @@
+127.0.0.1
+localhost
+10.0.0.0/8
+<% if_p('postfix.dkim_privatekey') do %>
+*.<%= p('postfix.dkim_maildomain') %>
+<% end %>
