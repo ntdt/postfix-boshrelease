@@ -51,6 +51,9 @@ properties:
     tls_key:
       description: "TLS Key"
       default: ""
+    use_sasl:
+      description: "SMTPD use SASL true/false"
+      default: false
     sasl_users:
       description: "list of users and passwords used for SASL auth"
       default:
