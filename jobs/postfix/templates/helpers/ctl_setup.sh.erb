@@ -98,11 +98,8 @@ ln -fs ${JOB_DIR}/config/master.cf /etc/postfix/
 cp -f ${JOB_DIR}/config/aliases /etc/aliases
 newaliases
 
-<% if_p('postfix.sasl_users') do %>
-# set up sasldb
-<% p('postfix.sasl_users').keys.each do |user| %>
-echo <%= p('postfix.sasl_users')[user] %> | saslpasswd2 -c -u `postconf -h mydomain` <%= user %>
-<% end %>
+<% p('postfix.sasl_users', {}).each do |user, password| %>
+  echo "<%= password %>" | saslpasswd2 -c -u $(postconf -h mydomain) "<%= user %>"
 <% end %>
 cp /etc/sasldb2 /var/spool/postfix/etc/
 chgrp postfix /var/spool/postfix/etc/sasldb2
