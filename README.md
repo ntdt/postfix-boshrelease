@@ -19,7 +19,7 @@ cp templates/bosh-lite-example.yml tmp/manifest.yml
 vi tmp/manifest.yml
 bosh deploy -d postfix-warden tmp/manifest.yml
 ```
-If you do not want to enable SASL, then delete the `sasl_users` parameter.  If you do not want to enable DKIM, then delete the `dkim_privatekey` parameter.  If you do want to use DKIM, then you will need to generate that key and make sure that the public part of it is in your DNS.  You can learn more about this here:  https://wiki.debian.org/opendkim
+If you want to enable SASL, set the `use_sasl` parameter to true and supply a list of users/passwords in `sasl_users`.  If you do not want to enable DKIM, then delete the `dkim_privatekey` parameter.  If you do want to use DKIM, then you will need to generate that key and make sure that the public part of it is in your DNS.  You can learn more about this here:  https://wiki.debian.org/opendkim
 
 For AWS EC2, create a single VM:
 

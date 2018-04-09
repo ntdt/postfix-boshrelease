@@ -21,6 +21,7 @@ properties:
     - 127.0.0.1/16
     myhostname: postfix.bosh-lite.com
     use_tls: false
+    use_sasl: true
     sasl_users:
       user: password
       user1: password1

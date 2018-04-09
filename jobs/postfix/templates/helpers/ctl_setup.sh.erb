@@ -91,6 +91,8 @@ chown root:root ${CERT_DIR}/*.{crt,key}
 
 chmod 640 ${CERT_DIR}/*.crt
 chmod 400 ${CERT_DIR}/*.key
+cp ${CERT_DIR}/*.crt /usr/local/share/ca-certificates/
+/usr/sbin/update-ca-certificates
 
 # config main.cf
 ln -fs ${JOB_DIR}/config/main.cf /etc/postfix/
@@ -98,10 +100,15 @@ ln -fs ${JOB_DIR}/config/master.cf /etc/postfix/
 cp -f ${JOB_DIR}/config/aliases /etc/aliases
 newaliases
 
+<% if p('postfix.use_sasl') %>
+# set up sasldb
 <% p('postfix.sasl_users', {}).each do |user, password| %>
   echo "<%= password %>" | saslpasswd2 -c -u $(postconf -h mydomain) "<%= user %>"
 <% end %>
 cp /etc/sasldb2 /var/spool/postfix/etc/
 chgrp postfix /var/spool/postfix/etc/sasldb2
+<% end %>
+
+# opendkim seemed to want this
 mkdir -p /var/spool/postfix/var/tmp
 chmod 1777 /var/spool/postfix/var/tmp
