@@ -8,7 +8,7 @@ cp /var/vcap/jobs/postfix/opendkim/etc/opendkim.conf /etc/opendkim/
 cp /var/vcap/jobs/postfix/opendkim/etc/opendkim/TrustedHosts /etc/opendkim/
 cp /var/vcap/jobs/postfix/opendkim/etc/opendkim/KeyTable /etc/opendkim/
 cp /var/vcap/jobs/postfix/opendkim/etc/opendkim/SigningTable /etc/opendkim/
-cp /var/vcap/jobs/postfix/opendkim/etc/opendkim/domainkeys/cloudgov.private /etc/opendkim/domainkeys/
+cp /var/vcap/jobs/postfix/opendkim/etc/opendkim/domainkeys/dkim.private /etc/opendkim/domainkeys/
 chgrp -R opendkim /etc/opendkim
 chmod -R g+r /etc/opendkim/
 /etc/init.d/opendkim stop
