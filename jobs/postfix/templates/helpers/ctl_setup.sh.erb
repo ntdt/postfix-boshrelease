@@ -91,6 +91,8 @@ chown root:root ${CERT_DIR}/*.{crt,key}
 
 chmod 640 ${CERT_DIR}/*.crt
 chmod 400 ${CERT_DIR}/*.key
+cp ${CERT_DIR}/*.crt /usr/local/share/ca-certificates/
+/usr/sbin/update-ca-certificates
 
 # config main.cf
 ln -fs ${JOB_DIR}/config/main.cf /etc/postfix/
