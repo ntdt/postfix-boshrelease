@@ -18,7 +18,7 @@ templates:
   opendkim/etc/opendkim/TrustedHosts.erb: opendkim/etc/opendkim/TrustedHosts
   opendkim/etc/opendkim/KeyTable.erb: opendkim/etc/opendkim/KeyTable
   opendkim/etc/opendkim/SigningTable.erb: opendkim/etc/opendkim/SigningTable
-  opendkim/etc/opendkim/domainkeys/cloudgov.private.erb: opendkim/etc/opendkim/domainkeys/cloudgov.private
+  opendkim/etc/opendkim/domainkeys/dkim.private.erb: opendkim/etc/opendkim/domainkeys/dkim.private
 
 properties:
   postfix:
@@ -51,7 +51,7 @@ properties:
       default: ""
     sasl_users:
       description: "list of users and passwords used for SASL auth"
-      default:
+      example:
         user: password
         user1: password1
     dkim_privatekey:
