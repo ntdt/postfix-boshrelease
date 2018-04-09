@@ -44,7 +44,7 @@ properties:
       description: "SMTPD use TLS true/false"
       default: false
     tls_cert:
-      description: "Certificat TLS"
+      description: "Certificate TLS"
       default: ""
     tls_key:
       description: "TLS Key"
