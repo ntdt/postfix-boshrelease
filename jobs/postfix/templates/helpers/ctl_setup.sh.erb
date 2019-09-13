@@ -103,7 +103,7 @@ newaliases
 <% if p('postfix.use_sasl') %>
 # set up sasldb
 <% p('postfix.sasl_users', {}).each do |user, password| %>
-  echo "<%= password %>" | saslpasswd2 -c -u $(postconf -h mydomain) "<%= user %>"
+  echo "<%= password %>" | saslpasswd2 -p -c -u $(postconf -h mydomain) "<%= user %>"
 <% end %>
 cp /etc/sasldb2 /var/spool/postfix/etc/
 chgrp postfix /var/spool/postfix/etc/sasldb2
