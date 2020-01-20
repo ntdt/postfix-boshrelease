@@ -1,0 +1,3 @@
+<% if_p('postfix.dkim_privatekey') do %>
+mail._domainkey.<%= p('postfix.dkim_maildomain') %> <%= p('postfix.dkim_maildomain') %>:mail:/etc/opendkim/domainkeys/dkim.private
+<% end %>

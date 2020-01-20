@@ -11,12 +11,10 @@ case $1 in
 
   start)
       /etc/init.d/postfix start
-
       ;;
 
   stop)
       /etc/init.d/postfix stop
-
       ;;
   *)
       echo "Usage: postfix_ctl {start|stop}"

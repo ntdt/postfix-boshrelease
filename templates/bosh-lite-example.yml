@@ -1,0 +1,54 @@
+director_uuid: XXX
+instance_groups:
+- instances: 1
+  jobs:
+  - name: postfix
+    release: postfix
+  azs: [z1]
+  vm_type: default
+  stemcell: default
+  networks:
+  - name: default
+  name: postfix
+  persistent_disk: 0
+name: postfix-warden
+properties:
+  postfix:
+    relayhost: XXX:587
+    root_recipient: postmaster@XXX.XXX
+    mynetworks:
+    - 10.0.0.0/8
+    - 127.0.0.1/16
+    myhostname: postfix.bosh-lite.com
+    use_tls: false
+    use_sasl: true
+    sasl_users:
+      user: password
+      user1: password1
+    dkim_maildomain: bosh-lite.com
+    dkim_privatekey: |
+      -----BEGIN RSA PRIVATE KEY-----
+      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX=
+      -----END RSA PRIVATE KEY-----
+
+releases:
+- name: postfix
+  version: latest
+update:
+  canaries: 1
+  canary_watch_time: 1000-30000
+  max_in_flight: 50
+  serial: false
+  update_watch_time: 1000-30000
+stemcells:
+- alias: default
+  name: bosh-warden-boshlite-ubuntu-trusty-go_agent
+  version: latest
+
